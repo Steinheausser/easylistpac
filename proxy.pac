@@ -4946,8 +4946,6 @@ else if (
    (host == "updates-http.cdn-.com") || dnsDomainIs(host, "updates-http.cdn-.com") ||
    (host == "updates.cdn-.com") || dnsDomainIs(host, "updates.cdn-.com") ||
    (host == "xp..com") || dnsDomainIs(host, "xp..com") ||
-   dnsDomainIs(host, ".itunes..com") ||
-   dnsDomainIs(host, ".apps..com") ||
    dnsDomainIs(host, ".mzstatic.com") ||
    (host == "ppq..com") || dnsDomainIs(host, "ppq..com") ||
    (host == "lcdn-registration..com") || dnsDomainIs(host, "lcdn-registration..com") ||
