@@ -3,7 +3,7 @@
 // Copyright (C) 2017 by Steven T. Smith <steve dot t dot smith at gmail dot com>, GPL
 // https://github.com/essandess/easylist-pac-privoxy/
 //
-// PAC file created on Sun, 02 Aug 2020 08:51:05 GMT
+// PAC file created on Wed, 05 Aug 2020 11:57:23 GMT
 // Created with command: easylist_pac.py
 //
 // http://www.gnu.org/licenses/lgpl.txt
@@ -99,7 +99,123 @@ var blackhole = "PROXY " + blackhole_ip_port;
 // 
 // bad_da_host_exact == bad domain anchor with host/path type, exact matching with Object hash
 // bad_da_host_regex == bad domain anchor with host/path type, RegExp matching
+// 
+// 110 rules:
+var good_da_host_JSON = { "apple.com": null,
+"albert.apple.com": null,
+"captive.apple.com": null,
+"gs.apple.com": null,
+"humb.apple.com": null,
+"static.ips.apple.com": null,
+"tbsc.apple.com": null,
+"time-ios.apple.com": null,
+"time.apple.com": null,
+"time-macos.apple.com": null,
+"gdmf.apple.com": null,
+"deviceenrollment.apple.com": null,
+"deviceservices-external.apple.com": null,
+"identity.apple.com": null,
+"iprofiles.apple.com": null,
+"mdmenrollment.apple.com": null,
+"setup.icloud.com": null,
+"appldnld.apple.com": null,
+"gg.apple.com": null,
+"gnf-mdn.apple.com": null,
+"gnf-mr.apple.com": null,
+"ig.apple.com": null,
+"mesu.apple.com": null,
+"oscdn.apple.com": null,
+"osrecovery.apple.com": null,
+"skl.apple.com": null,
+"swcdn.apple.com": null,
+"swdist.apple.com": null,
+"swdownload.apple.com": null,
+"swpost.apple.com": null,
+"swscan.apple.com": null,
+"updates-http.cdn-apple.com": null,
+"updates.cdn-apple.com": null,
+"xp.apple.com": null,
+"ppq.apple.com": null,
+"lcdn-registration.apple.com": null,
+"crl.apple.com": null,
+"crl.entrust.net": null,
+"crl3.digicert.com": null,
+"crl4.digicert.com": null,
+"ocsp.apple.com": null,
+"ocsp.digicert.com": null,
+"ocsp.entrust.net": null,
+"ocsp.verisign.net": null,
+"icloud.com": null,
+"apple-dns.net": null,
+"init.itunes.apple.com": null,
+"init-cdn.itunes-apple.com.akadns.net": null,
+"itunes.apple.com.edgekey.net": null,
+"p32-escrowproxy.icloud.com": null,
+"p32-escrowproxy.fe.apple-dns.net": null,
+"keyvalueservice.icloud.com": null,
+"keyvalueservice.fe.apple-dns.net": null,
+"p32-bookmarks.icloud.com": null,
+"p32-bookmarks.fe.apple-dns.net": null,
+"p32-ckdatabase.icloud.com": null,
+"p32-ckdatabase.fe.apple-dns.net": null,
+"configuration.apple.com": null,
+"configuration.apple.com.edgekey.net": null,
+"mesu-cdn.apple.com.akadns.net": null,
+"mesu.g.aaplimg.com": null,
+"gspe1-ssl.ls.apple.com": null,
+"gspe1-ssl.ls.apple.com.edgekey.net": null,
+"api-glb-bos.smoot.apple.com": null,
+"query.ess.apple.com": null,
+"query-geo.ess-apple.com.akadns.net": null,
+"query.ess-apple.com.akadns.net": null,
+"setup.fe.apple-dns.net": null,
+"gsa.apple.com": null,
+"gsa.apple.com.akadns.net": null,
+"icloud-content.com": null,
+"usbos-edge.icloud-content.com": null,
+"usbos.ce.apple-dns.net": null,
+"lcdn-locator.apple.com": null,
+"lcdn-locator.apple.com.akadns.net": null,
+"lcdn-locator-usuqo.apple.com.akadns.net": null,
+"cl1.apple.com": null,
+"cl2.apple.com": null,
+"cl3.apple.com": null,
+"cl4.apple.com": null,
+"cl5.apple.com": null,
+"cl1-cdn.origin-apple.com.akadns.net": null,
+"cl2-cdn.origin-apple.com.akadns.net": null,
+"cl3-cdn.origin-apple.com.akadns.net": null,
+"cl4-cdn.origin-apple.com.akadns.net": null,
+"cl5-cdn.origin-apple.com.akadns.net": null,
+"cl1.apple.com.edgekey.net": null,
+"cl2.apple.com.edgekey.net": null,
+"cl3.apple.com.edgekey.net": null,
+"cl4.apple.com.edgekey.net": null,
+"cl5.apple.com.edgekey.net": null,
+"xp.itunes-apple.com.akadns.net": null,
+"mt-ingestion-service-pv.itunes.apple.com": null,
+"p32-sharedstreams.icloud.com": null,
+"p32-sharedstreams.fe.apple-dns.net": null,
+"p32-fmip.icloud.com": null,
+"p32-fmip.fe.apple-dns.net": null,
+"gsp-ssl.ls.apple.com": null,
+"gsp-ssl.ls-apple.com.akadns.net": null,
+"gsp-ssl.ls2-apple.com.akadns.net": null,
+"gspe35-ssl.ls.apple.com": null,
+"gspe35-ssl.ls-apple.com.akadns.net": null,
+"gspe35-ssl.ls.apple.com.edgekey.net": null,
+"gsp64-ssl.ls.apple.com": null,
+"gsp64-ssl.ls-apple.com.akadns.net": null,
+"mt-ingestion-service-st11.itunes.apple.com": null,
+"mt-ingestion-service-st11.itunes-apple.com.akadns.net": null,
+"microsoft.com": null,
+"mozilla.com": null,
+"mozilla.org": null };
+var good_da_host_exact_flag = 110 > 0 ? true : false;  // test for non-zero number of rules
+    
 // 4 rules as an efficient NFA RegExp:
+var good_da_host_RegExp = /^(?:[\w-]+\.)*?(?:^(?:[\w-]+\.)*?push\.apple\.com[^\w.%-]|^(?:[\w-]+\.)*?itunes\.apple\.com[^\w.%-]|^(?:[\w-]+\.)*?apps\.apple\.com[^\w.%-]|^(?:[\w-]+\.)*?mzstatic\.com[^\w.%-])/i;
+var good_da_host_regex_flag = 4 > 0 ? true : false;  // test for non-zero number of rules
 
 // 0 rules:
 var good_da_hostpath_JSON = {  };
@@ -114,7 +230,9 @@ var good_da_RegExp = /^$/;
 var good_da_regex_flag = 0 > 0 ? true : false;  // test for non-zero number of rules
 
 // 39 rules:
-var good_da_host_exceptions_JSON = { "iad..com": null,
+var good_da_host_exceptions_JSON = { "iad.apple.com": null,
+"iadsdk.apple.com": null,
+"iadsdk.apple.com.edgekey.net": null,
 "bingads.microsoft.com": null,
 "azure.bingads.trafficmanager.net": null,
 "choice.microsoft.com": null,
@@ -153,7 +271,7 @@ var good_da_host_exceptions_JSON = { "iad..com": null,
 "www.bingads.microsoft.com": null };
 var good_da_host_exceptions_exact_flag = 39 > 0 ? true : false;  // test for non-zero number of rules
 
-// 3464 rules:
+// 3466 rules:
 var bad_da_host_JSON = { "api.facebook.com": null,
 "badge.facebook.com": null,
 "addinto.com": null,
@@ -251,7 +369,7 @@ var bad_da_host_JSON = { "api.facebook.com": null,
 "widget.trustpilot.com": null,
 "widget.zoorate.com": null,
 "widgets.dzone.com": null,
-"widgets.itunes..com": null,
+"widgets.itunes.apple.com": null,
 "widgets.seekitlocal.com": null,
 "widgets.sprinkletxt.com": null,
 "widgets.tapcdn.com": null,
@@ -759,7 +877,6 @@ var bad_da_host_JSON = { "api.facebook.com": null,
 "ewebcounter.com": null,
 "exclusiveclicks.com": null,
 "exovueplatform.com": null,
-"exosrv.com": null,
 "experianmarketingservices.digital": null,
 "explore-123.com": null,
 "exponea.com": null,
@@ -1941,7 +2058,6 @@ var bad_da_host_JSON = { "api.facebook.com": null,
 "mycounter.com.ua": null,
 "mycounter.ua": null,
 "weblog.com.ua": null,
-"main.realsrv.com": null,
 "zmctrack.net": null,
 "adtimaserver.vn": null,
 "amcdn.vn": null,
@@ -2126,6 +2242,7 @@ var bad_da_host_JSON = { "api.facebook.com": null,
 "collector.contentexchange.me": null,
 "collector.roistat.com": null,
 "comms.thewhiskyexchange.com": null,
+"confiant-integrations.global.ssl.fastly.net": null,
 "conversions.genieventures.co.uk": null,
 "cookies.livepartners.com": null,
 "cookietracker.cloudapp.net": null,
@@ -2207,7 +2324,6 @@ var bad_da_host_JSON = { "api.facebook.com": null,
 "d34ko97cxuv4p7.cloudfront.net": null,
 "d35u1vg1q28b3w.cloudfront.net": null,
 "d36lvucg9kzous.cloudfront.net": null,
-"d36zfztxfflmqo.cloudfront.net": null,
 "d39yds8oe4n4jq.cloudfront.net": null,
 "d3a2okcloueqyx.cloudfront.net": null,
 "d3cgm8py10hi0z.cloudfront.net": null,
@@ -2401,6 +2517,7 @@ var bad_da_host_JSON = { "api.facebook.com": null,
 "pixel.yola.com": null,
 "platform.communicatorcorp.com": null,
 "platform.iteratehq.com": null,
+"plumbus.minutemediaservices.com": null,
 "pmetrics.performancing.com": null,
 "postpixel.vindicosuite.com": null,
 "pr.blogflux.com": null,
@@ -3621,13 +3738,13 @@ var bad_da_host_JSON = { "api.facebook.com": null,
 "ios-quinoa-high-frequency-events-prod.sense360eng.com": null,
 "v1.blueberry.cloud.databerries.com": null,
 "outbrain.com": null };
-var bad_da_host_exact_flag = 3464 > 0 ? true : false;  // test for non-zero number of rules
+var bad_da_host_exact_flag = 3466 > 0 ? true : false;  // test for non-zero number of rules
     
 // 17 rules as an efficient NFA RegExp:
 var bad_da_host_RegExp = /^(?:[\w-]+\.)*?(?:tracking(?=([\s\S]*?\.euroads\.fi))\1|tracking\.(?=([\s\S]*?\.miui\.com))\2|minero\-proxy\-(?=([\s\S]*?\.sh))\3|analytics\-beacon\-(?=([\s\S]*?\.amazonaws\.com))\4|collector\-(?=([\s\S]*?\.elb\.amazonaws\.com))\5|collector\-(?=([\s\S]*?\.tvsquared\.com))\6|datacollect(?=([\s\S]*?\.abtasty\.com))\7|log\-(?=([\s\S]*?\.previewnetworks\.com))\8|mcdp\-(?=([\s\S]*?\.outbrain\.com))\9|metro\-trending\-(?=([\s\S]*?\.amazonaws\.com))\10|trk(?=([\s\S]*?\.vidible\.tv))\11|vtnlog\-(?=([\s\S]*?\.elb\.amazonaws\.com))\12|stats2\.(?=([\s\S]*?\.fdnames\.com))\13|stats\-(?=([\s\S]*?\.p2pnow\.ru))\14|logger\-(?=([\s\S]*?\.dailymotion\.com))\15|metric(?=([\s\S]*?\.rediff\.com))\16|log(?=([\s\S]*?\.ku6\.com))\17)/i;
 var bad_da_host_regex_flag = 17 > 0 ? true : false;  // test for non-zero number of rules
 
-// 935 rules:
+// 936 rules:
 var bad_da_hostpath_JSON = { "facebook.com/plugins/activity.php": null,
 "facebook.com/plugins/comments.php": null,
 "facebook.com/plugins/facepile.php": null,
@@ -4295,6 +4412,7 @@ var bad_da_hostpath_JSON = { "facebook.com/plugins/activity.php": null,
 "playlist.com/scripts/remote_logger.js": null,
 "plentyoffish.com/tracking.js": null,
 "pokernews.com/track-views.php": null,
+"poptropica.com/brain/track.php": null,
 "porndoo.com/lib/ajax/track.php": null,
 "pricegrabber.com/analytics.php": null,
 "prospects.ac.uk/assets/js/prospectsWebTrends.js": null,
@@ -4563,10 +4681,10 @@ var bad_da_hostpath_JSON = { "facebook.com/plugins/activity.php": null,
 "esmas.com/scripts/esmas_stats.js": null,
 "taringa.net/ajax/track-visit.php": null,
 "uecdn.es/js/pbmu.js": null };
-var bad_da_hostpath_exact_flag = 935 > 0 ? true : false;  // test for non-zero number of rules
+var bad_da_hostpath_exact_flag = 936 > 0 ? true : false;  // test for non-zero number of rules
     
 // 499 rules as an efficient NFA RegExp:
-var bad_da_hostpath_RegExp = /^(?:[\w-]+\.)*?(?:facebook\.com\/connect\/|facebook\.com\/plugins\/subscribe|amazonaws\.com\/fby\/|bing\.com\/widget\/render\/|civicscience\.com\/widget\/jspoll\/|ctctcdn\.com\/js\/signup\-form\-widget\/|diigo\.com\/images\/diigo\-icon\/|download\.skype\.com\/share\/|dukecms\.com\/deals2\/|eff\.org\/bloggers\/badges\/|img\.fark\.net\/pub\/|instapaper\.com\/javascript\/|kaango\.com\/feCustomWidgetDisplay\/|list\-manage1\.com\/subscriber\-count|magimg\.com\/random|mailjet\.com\/widget\/|mobj\.space\/js\/appsdiscover\/|mozo\.com\.au\/widgets\/|nrcdn\.com\/custom\-script\/|s3\.amazonaws\.com\/scripts\.hellobar\.com\/|sail\-horizon\.com\/horizon\/|sail\-horizon\.com\/scout\/|services\.webklipper\.com\/geoip\/|sheknows\.com\/widget\/|teamautofollow\.com\/modules\/mod_jtwitter\/|techbeat\.com\/wp\-content\/custom\-php\/|vk\.com\/images\/|yimg\.com\/uq\/syndication\/|youappi\.com\/widget\/|zimbio\.com\/images\/badges\/|ziprecruiter\.com\/jobs\-widget\/|contentsitesrv\.com\/js\/push\/|amazonaws\.com\/cdn\.aimtell\.com\/|amazonaws\.com\/share\.typeform\.com\/|b\.st\-hatena\.com\/images\/|bloglovin\.com\/widget\/|dailymotion\.com\/badge\/user\/|digg\.com\/img\/badges\/|facebook\.com\/plugins\/follow|facebook\.com\/plugins\/likebox\/|feedly\.com\/img\/follows\/|flipboard\.com\/web\/buttons\/|getsocial\.io\/widget\/|houzz\.com\/buttonWidget|karmacracy\.com\/widget|linkedin\.com\/countserv\/|linkedin\.com\/img\/|pinterest\.com\/images\/|platform\.twitter\.com\/js\/button\.|po\.st\/static\/|reddit\.com\/static\/|socialhoney\.co\/widget\/|spiceworks\.com\/share\/|spotify\.com\/follow\/|storeya\.com\/externalscript\/|stumbleupon\.com\/hostedbadge|syndication\.twimg\.com\/widgets\/|twitter\.com\/account\/|twitter\.com\/i\/jot|twitter\.com\/javascripts\/|vuukle\.com\/widgets\/powerbar\/|wer\-kennt\-wen\.de\/js\/widgets\/external\/|werkenntwen\.de\/images\/empfehlen_buttons\/|widgets\.wp\.com\/likes\/|wykop\.pl\/dataprovider\/diggerwidget\/|xing\.com\/img\/buttons\/|yandex\.st\/share\/|youtube\.com\/subscribe_embed|youtube\.com\/subscribe_widget|zextit\.com\/partners\/|complex\.com\/toolbar\/|findthebest\.co\.uk\/ajax\/load_tracker|gameyum\.com\/_static\/popup\/|goodreads\.com\/sign_in_prompt|imgzzz\.com\/styles\/buttons_|newegg\.com\/newegg\/survey\/|rudaw\.net\/images\/icsubscribe\.|sfstatic\.net\/build\/experiment\/helperWidget\-|space\.com\/images\/site\/social\/|spankbang\.com\/api\/livecamv2\/|tutorvista\.com\/iframe_container\/|wp\.com\/wp\-content\/mu\-plugins\/post\-flair\/|attn\.com\/survey|motorsport\.com\/join\/popup\/|oilprice\.com\/iframes\/sidebar_signupform\/|scmp\.com\/misc\/inkstone_sub_widget\/|thejewishstar\.com\/images\/enews\-|yahoo\.com\/manifest_desktop_|alwaght\.com\/upload\/logo\/case\/|bwwstatic\.com\/socialtop|cloudfront\.net\/facebook\/|cloudfront\.net\/facebookpage\/|cloudfront\.net\/googleplus\/|cloudfront\.net\/instagram\/|cloudfront\.net\/linkedin\/|cloudfront\.net\/twitter\/|graytvinc\.com\/images\/f_logo_|huffingtonpost\.com\/images\/bookmarking\/|linkis\.com\/ajax\/get\-popup\-html|monova\.org\/ajax\/get_lightbox_content|presstv\.ir\/images\/sn_|rackcdn\.com\/Instagram\/|reuters\.tv\/socialLinks\/|schwalbe\.co\.uk\/_webedit\/cached\-images\/172\-37\-38\-0\-0\-37\-38|schwalbe\.co\.uk\/_webedit\/cached\-images\/174\-37\-38\-0\-0\-37\-38|sourceforge\.net\/social\/|masaltos\.com\/js\/cookies\-|onlive\.co\.uk\/account\/cookie_notice|parliamentlive\.tv\/cookie\/|propcom\.co\.uk\/cookie\/|gluecksdetektiv\.de\/wp\-content\/plugins\/easy\-fancybox\-pro\/|vebidoo\.de\/images\/xtotop\.|boosterblog\.com\/ban\/|out\.be\/widgets\/|cure\-naturali\.it\/banner\/|dday\.it\/assets\/img\/cds_logo\-|hikoki\-powertools\.it\/image\/top\-|currenttime\.tv\/a\/signup\-sidebar\-widget\/|espreso\.rs\/widget|auto\-motor\-und\-sport\.de\/img\/google\.svg|werkenntwen\.de\/images\/buttons\/|nouvelobs\.com\/social\/|qatarradio\.qa\/images\/LB\/|shabiba\.com\/images\/snapchat\-|shabiba\.com\/images\/whatsapp\-|cts\.com\.tw\/images\/bot_|calciomercato\.it\/img\/notizie\/social\/|ilquotidianodellazio\.it\/img\/mi\-piace\-|draugiem\.lv\/business\/ext\/fans\/|draugiem\.lv\/business\/ext\/follow\/|draugiem\.lv\/lapas\/widgets\/|cookiesv2\.publiekeomroep\.nl\/light\/|creaweb\.it\/cookie\/|cure\-naturali\.it\/cookies|effekt\.it\/analytics\/|interia\.pl\/rodo\-iframe|remixshop\.com\/bg\/site\/ajaxCheckCookiePolicy|doubleclick\.net\/activity|doubleclick\.net\/imp%|doubleclick\.net\/json|doubleclick\.net\/pixel|google\-analytics\.com\/batch[^\w.%-]|google\-analytics\.com\/collect|google\-analytics\.com\/gtm\/js|google\-analytics\.com\/internal\/collect[^\w.%-]|google\-analytics\.com\/plugins\/|google\-analytics\.com\/r\/collect[^\w.%-]|googletagmanager\.com\/gtag\/|googletagmanager\.com\/gtm\/|quantserve\.com\/api\/|quantserve\.com\/pixel\/|netquattro\.com\/stats\/|208\.91\.157\.30\/viewtrack\/|216\.18\.176\.4\/logger\/|3qsdn\.com\/watchtime|5min\.com\/flashcookie\/StorageCookieSWF_|88\.208\.248\.58\/tracking\/|99widgets\.com\/counters\/|9fine\.ru\/js\/counter\.|activengage\.com\/overwatch\/|ad\.atdmt\.com\/c\/|ad\.atdmt\.com\/e\/|ad\.atdmt\.com\/i\/img\/|ad\.atdmt\.com\/m\/|ad\.atdmt\.com\/s\/|addnow\.com\/tracker\/|addthis\.com\/at\/|addthis\.com\/live\/|addthiscdn\.com\/live\/|addthisedge\.com\/live\/|adf\.ly\/ad\/conv|adsv7\.com\/t\/|affilired\.com\/analytic\/|affirm\.com\/api\/v2\/cookie_sent|affirm\.com\/api\/v2\/session\/touch_track|afrigator\.com\/track\/|akanoo\.com\/tracker\/|alexa\.com\/minisiteinfo\/|alexa\.com\/traffic\/|aliyun\.com\/actionlog\/|allanalpass\.com\/track\/|alooma\.com\/track\/|alooma\.io\/track\/|alphasitebuilder\.co\.za\/tracker\/|amatomu\.com\/link\/log\/|amazonaws\.com\/analytics\.|amazonaws\.com\/avsmetrics\/|amazonaws\.com\/cdn\.barilliance\.com\/|amazonaws\.com\/fstrk\.net\/|amazonaws\.com\/initialize\/|amazonaws\.com\/ki\.js\/|amazonaws\.com\/new\.cetrk\.com\/|amazonaws\.com\/searchdiscovery\-satellite\-production\/|amazonaws\.com\/statics\.reedge\.com\/|amazonaws\.com\/wgntrk\/|ancestrycdn\.com\/tao\/at\/|aolanswers\.com\/wtrack\/|apester\.com\/event[^\w.%-]|appinthestore\.com\/click\/|appspot\.com\/analytics\/|appspot\.com\/api\/track\/|appspot\.com\/stats|areyouahuman\.com\/kitten|asterpix\.com\/tagcloudview\/|azureedge\.net\/javascripts\/Tracking\.|azureedge\.net\/track|azurewebsites\.net\/TrackView\/|baidu\.com\/pixel|bhphotovideo\.com\/imp\/|bing\.com\/aclick\/|birdsend\.email\/pixel|bit\.ly\/stats|bitclouds\.ru\/trd|bizrate\.co\.uk\/js\/survey_|blogblog\.com\/tracker\/|brandaffinity\.net\/icetrack\/|brandcdn\.com\/pixel\/|bravenet\.com\/counter\/|break\.com\/apextracker\/|browserscope\.org\/user\/beacon\/|bucklemail\.com\/a\/|byteoversea\.com\/log\/|c\-date\.com\/pixel\/|canada\.com\/js\/analytics\/|carambo\.la\/analytics\/|carambo\.la\/logging\/|cdn3\.net\/pixe\/|checkout\.com\/logger\/|chicoryapp\.com\/widget_v2\/|citygridmedia\.com\/tracker\/|citysearch\.com\/tracker\/|cityzen\.io\/Pixel\/|clickchatsold\.com\/d0\/|clickfunnels\.com\/userevents\/|clipsyndicate\.com\/cs_api\/cliplog|cloudapp\.net\/l\/|cloudfront\.net\/analyticsengine\/|cloudfront\.net\/autotracker|cloudfront\.net\/bti\/|cloudfront\.net\/performable\/|cloudfront\.net\/sitegainer_|cloudfront\.net\/track|cloudfunctions\.net\/commonBonnierDataLayer|cloudfunctions\.net\/function\-record\-stream\-metric|cloudfunctions\.net\/ingest|clustrmaps\.com\/counter\/|cnetcontent\.com\/log|cnevids\.com\/metrics\/|cnpapers\.com\/scripts\/library\/|cnzz\.com\/stat\.|competitoor\.com\/analytics\/|conde\.io\/beacon|condenastdigital\.com\/content|connect\.facebook\.net\/signals\/|contentpass\.net\/stats|creativecdn\.com\/pix\/|creativecdn\.com\/tags|crm\-vwg\.com\/tracker\/|crowdfactory\.com\/tracker\/|cumulus\-cloud\.com\/trackers\/|customerlobby\.com\/ctrack\-|d31bfnnwekbny6\.cloudfront\.net\/customers\/|d3hb14vkzrxvla\.cloudfront\.net\/health\-check|data\.microsoft\.com\/OneCollector\/|daumcdn\.net\/tiara\/|daxab\.com\/logger\/|daylogs\.com\/counter\/|dditscdn\.com\/log\/|dealerfire\.com\/analytics\/|deb\.gs\/track\/|delivra\.com\/tracking\/|delvenetworks\.com\/player\/plugins\/analytics\/|desert\.ru\/tracking\/|desipearl\.com\/tracker\/|directnews\.co\.uk\/feedtrack\/|dmcdn\.net\/behavior\/|drift\.com\/track|dtym7iokkjlif\.cloudfront\.net\/dough\/|early\-birds\.fr\/tracker\/|egmontpublishing\.dk\/tracking\/|email\.mediafire\.com\/wf\/open|emarketeer\.com\/tracker\/|epromote\.co\.za\/track\/|eventful\.com\/apps\/generic\/|evgnet\.com\/beacon\/|eviesays\.com\/js\/analytics\/|evri\.com\/analytics\/|exitintel\.com\/log\/|facebook\.com\/audience_network\/|facebook\.com\/method\/links\.getStats|facebook\.com\/rtb_impression\/|facebook\.com\/rtb_video\/|facebook\.com\/tr|fairfax\.com\.au\/js\/track\/|feed\.informer\.com\/fdstats|feedify\.net\/thirdparty\/json\/track\/|filesonic\.com\/referral\/|fitanalytics\.com\/metrics\/|flex\.msn\.com\/mstag\/|followistic\.com\/widget\/stat\/|footballmedia\.com\/tracking\/|foxcontent\.com\/tracking\/|fp\-cdn\.azureedge\.net\/prod\/|freecurrencyrates\.com\/statgif\.|gamegecko\.com\/gametrack|getrockerbox\.com\/pixel|github\.com\/notifications\/beacon\/|google\.com\/analytics\/|googleusercontent\.com\/tracker\/|gotmojo\.com\/track\/|grabnetworks\.com\/beacons\/|gstatic\.com\/gen_204|gstatic\.com\/wcm\/impl\-|gubagoo\.com\/modules\/tracking\/|gubagoo\.io\/track\/|hasbro\.com\/includes\/js\/metrics\/|hello\.myfonts\.net\/count\/|hgcdn\.net\/|hocalwire\.com\/tracking\-|hubspot\.com\/analytics\/|hubspot\.com\/tracking\/|ibmcloud\.com\/collector\/|impdesk\.com\/smartpix\/|innogamescdn\.com\/media\/js\/metrics\-|inphonic\.com\/tracking\/|inq\.com\/tagserver\/logging\/|inq\.com\/tagserver\/tracking\/|insnw\.net\/assets\/dsc\/dsc\.fingerprint\-|instagram\.com\/logging\/|instagram\.com\/logging_client_events|installiq\.com\/Pixels\/|intensedebate\.com\/widgets\/blogstats\/|internetfuel\.com\/tracking\/|intuitwebsites\.com\/tracking\/|ipstatp\.com\/growth\/fe_sdk\/reportsdk\/|ipstatp\.com\/static_magic\/pgc\/tech\/collect\/|kbb\.com\/partner\/|klickly\.com\/track|kochava\.com\/track\/|kxcdn\.com\/actor\/|kxcdn\.com\/prj\/|l\-host\.net\/etn\/omnilog|legacy\.com\/globalscripts\/tracking\/|letv\.com\/cloud_pl\/|ligatus\.com\/script\/viewtracker\-|lingows\.appspot\.com\/page_data\/|link\.indiegogo\.com\/img\/|linkbucks\.com\/visitScript\/|linkedin\.com\/countserv\/count\/|list\-manage\.com\/track\/|live\-partner\.com\/tags|livefyre\.com\/libs\/tracker\/|livefyre\.com\/tracking\/|liverail\.com\/track\/|location3\.com\/analytics\/|ltassrv\.com\/track\/|luminate\.com\/track\/|magnify\.net\/decor\/track\/|mail\-app\.com\/pvtracker\/|mail\.ru\/grstat|mail\.ru\/k|mandrillapp\.com\/track\/|mangomolo\.com\/tracking\/|mapquestapi\.com\/logger\/|maptrackpro\.com\/track\/|mashery\.com\/analytics\/|mbsvr\.net\/js\/tracker\/|media\-imdb\.com\/twilight\/|mediabong\.com\/t\/|mediabong\.net\/t\/|merchenta\.com\/track\/|mixpanel\.com\/track|mochiads\.com\/clk\/|msecnd\.net\/script\/raptor\-|msecnd\.net\/scripts\/a\/ai\.|msecnd\.net\/scripts\/b\/ai\.|msecnd\.net\/scripts\/jsll\-|mshcdn\.com\/assets\/metrics\-|mtvnservices\.com\/metrics\/|mxmfb\.com\/rsps\/img\/|mysociety\.org\/track\/|nastydollars\.com\/trk\/|needle\.com\/pageload|netalpaca\.com\/beacon|netdna\-ssl\.com\/tracker\/|netne\.net\/stats\/|newton\.pm\/events\/track_bulk|ngpvan\.com\/v1\/Track\/|nice264\.com\/data|nitropay\.com\/nads\/|nspmotion\.com\/tracking\/|onecount\.net\/onecount\/oc_track\/|onescreen\.net\/os\/static\/pixels\/|ooyala\.com\/3rdparty\/comscore_|ooyala\.com\/sas\/analytics|ooyala\.com\/verify|outbrain\.com\/nanoWidget\/externals\/cookie\/|pair\.com\/itero\/tracker_ftc\/|payments\.amazon\.com\/cs\/uedata|paypal\.com\/xoplatform\/logger\/api\/logger|pega\.com\/logserver|penton\.com\/analytics\/|performgroup\.com\/metrics\/|photobox\.com\/event|photobox\.com\/logs|piano\.io\/tracker\/|pixel\.indieclicktv\.com\/annonymous\/|planet49\.com\/log\/|player\.ooyala\.com\/errors\/report|playtomic\.com\/Tracker\/|plugins\.longtailvideo\.com\/googlytics|plugins\.longtailvideo\.com\/yourlytics|poweredbyeden\.com\/widget\/tracker\/|ppx\.com\/tracking\/|primedia\.co\.za\/analytics\/|propelplus\.com\/track\/|publicbroadcasting\.net\/analytics\/|pushly\.com\/pushly\-event\-tracker|px\-cdn\.net\/b\/s|qcloud\.com\/report\.go|qq\.com\/dataimport\/|qq\.com\/stats|quisma\.com\/tracking\/|quora\.com\/_\/ad\/|rapidspike\.com\/rum\/|raygun\.io\/events|rbl\.ms\/res\/users\/tracking\/|readcube\.com\/tracking\/|rebel\.ai\/track|recart\.com\/tracking\/|reelevant\.dev\/tracker|reevoo\.com\/track\/|reevoo\.com\/track_url\/|reflow\.tv\/pixels\/|relaymedia\.com\/ping|reverbnation\.com\/widgets\/trk\/|richrelevance\.com\/rrserver\/tracking|rokt\.com\/pixel\/|ru4\.com\/click|s24cloud\.net\/log[^\w.%-]|s24cloud\.net\/metrics\/|sailthru\.com\/img\/|schibsted\.com\/autoTracker|scribol\.com\/traffix\/widget_tracker\/|share\-online\.biz\/affiliate\/|shareaholic\.com\/analytics_|shareholder\.com\/track\/|sharethis\.com\/increment_clicks|sharethis\.com\/pageviews|sinajs\.cn\/open\/analytics\/|sitebooster\.com\/sb\/wix\/p|sitefinity\.com\/collect\/|skysa\.com\/tracker\/|smartertravel\.com\/ext\/pixel\/|smg\.com\/Etrack\/|snapkit\.com\/v1\/sdk\/metrics\/|soccer\.ru\/counter\/|sohu\.com\/stat\/|southafricahome\.com\/statsmodulev2\/|spaceprogram\.com\/webstats\/|sparklit\.com\/counter\/|spot\.im\/api\/tracker\/|streamads\.com\/view|su\.pr\/hosted_js|sulia\.com\/papi\/sulia_partner\.js\/|survey\.io\/log|synergizeonline\.net\/trackpoint\/|tagcdn\.com\/pix\/|techweb\.com\/beacon\/|thefilter\.com\/events\/view|themesltd\.com\/hit\-counter\/|themesltd\.com\/online\-users\-counter\/|thespringbox\.com\/analytics\/|thismoment\.com\/tracking\/|thron\.com\/shared\/plugins\/tracking\/|tinyurl\.com\/pixel\.gif\/|toast\.com\/log|topix\.net\/t6track\/|torrentprotect\.com\/geoip|totallylayouts\.com\/hit\-counter\/|totallylayouts\.com\/online\-users\-counter\/|touchcommerce\.com\/tagserver\/logging\/|tourradar\.com\/def\/partner|tra\.scds\.pmdstatic\.net\/sourcepoint\/|traq\.li\/tracker\/|travel\-assets\.com\/datacapture\/|trendmd\.com\/events|trustpilot\.com\/stats\/|trustsquare\.net\/trafficmonitor\/|turnto\.com\/webEvent\/|twik\.io\/track|twimg\.com\/jot|twitter\.com\/scribe\/|ultimatebootcd\.com\/tracker\/|ultimedia\.com\/v\/|uptime\.com\/static\/rum\/|userway\.org\/api\/stats\/|va\.tawk\.to\/log|vanilladev\.com\/analytics\.)/i;
+var bad_da_hostpath_RegExp = /^(?:[\w-]+\.)*?(?:facebook\.com\/connect\/|facebook\.com\/plugins\/subscribe|amazonaws\.com\/fby\/|bing\.com\/widget\/render\/|civicscience\.com\/widget\/jspoll\/|ctctcdn\.com\/js\/signup\-form\-widget\/|diigo\.com\/images\/diigo\-icon\/|download\.skype\.com\/share\/|dukecms\.com\/deals2\/|eff\.org\/bloggers\/badges\/|img\.fark\.net\/pub\/|instapaper\.com\/javascript\/|kaango\.com\/feCustomWidgetDisplay\/|list\-manage1\.com\/subscriber\-count|magimg\.com\/random|mailjet\.com\/widget\/|mobj\.space\/js\/appsdiscover\/|mozo\.com\.au\/widgets\/|nrcdn\.com\/custom\-script\/|s3\.amazonaws\.com\/scripts\.hellobar\.com\/|sail\-horizon\.com\/scout\/|services\.webklipper\.com\/geoip\/|sheknows\.com\/widget\/|teamautofollow\.com\/modules\/mod_jtwitter\/|techbeat\.com\/wp\-content\/custom\-php\/|vk\.com\/images\/|yimg\.com\/uq\/syndication\/|youappi\.com\/widget\/|zimbio\.com\/images\/badges\/|ziprecruiter\.com\/jobs\-widget\/|contentsitesrv\.com\/js\/push\/|amazonaws\.com\/cdn\.aimtell\.com\/|amazonaws\.com\/share\.typeform\.com\/|b\.st\-hatena\.com\/images\/|bloglovin\.com\/widget\/|dailymotion\.com\/badge\/user\/|digg\.com\/img\/badges\/|facebook\.com\/plugins\/follow|facebook\.com\/plugins\/likebox\/|feedly\.com\/img\/follows\/|flipboard\.com\/web\/buttons\/|getsocial\.io\/widget\/|houzz\.com\/buttonWidget|karmacracy\.com\/widget|linkedin\.com\/countserv\/|linkedin\.com\/img\/|pinterest\.com\/images\/|platform\.twitter\.com\/js\/button\.|po\.st\/static\/|reddit\.com\/static\/|socialhoney\.co\/widget\/|spiceworks\.com\/share\/|spotify\.com\/follow\/|storeya\.com\/externalscript\/|stumbleupon\.com\/hostedbadge|syndication\.twimg\.com\/widgets\/|twitter\.com\/account\/|twitter\.com\/i\/jot|twitter\.com\/javascripts\/|vuukle\.com\/widgets\/powerbar\/|wer\-kennt\-wen\.de\/js\/widgets\/external\/|werkenntwen\.de\/images\/empfehlen_buttons\/|widgets\.wp\.com\/likes\/|wykop\.pl\/dataprovider\/diggerwidget\/|xing\.com\/img\/buttons\/|yandex\.st\/share\/|youtube\.com\/subscribe_embed|youtube\.com\/subscribe_widget|zextit\.com\/partners\/|complex\.com\/toolbar\/|findthebest\.co\.uk\/ajax\/load_tracker|gameyum\.com\/_static\/popup\/|goodreads\.com\/sign_in_prompt|imgzzz\.com\/styles\/buttons_|newegg\.com\/newegg\/survey\/|rudaw\.net\/images\/icsubscribe\.|sfstatic\.net\/build\/experiment\/helperWidget\-|space\.com\/images\/site\/social\/|spankbang\.com\/api\/livecamv2\/|tutorvista\.com\/iframe_container\/|wp\.com\/wp\-content\/mu\-plugins\/post\-flair\/|attn\.com\/survey|motorsport\.com\/join\/popup\/|oilprice\.com\/iframes\/sidebar_signupform\/|scmp\.com\/misc\/inkstone_sub_widget\/|thejewishstar\.com\/images\/enews\-|yahoo\.com\/manifest_desktop_|alwaght\.com\/upload\/logo\/case\/|bwwstatic\.com\/socialtop|cloudfront\.net\/facebook\/|cloudfront\.net\/facebookpage\/|cloudfront\.net\/googleplus\/|cloudfront\.net\/instagram\/|cloudfront\.net\/linkedin\/|cloudfront\.net\/twitter\/|graytvinc\.com\/images\/f_logo_|huffingtonpost\.com\/images\/bookmarking\/|linkis\.com\/ajax\/get\-popup\-html|monova\.org\/ajax\/get_lightbox_content|presstv\.ir\/images\/sn_|rackcdn\.com\/Instagram\/|reuters\.tv\/socialLinks\/|schwalbe\.co\.uk\/_webedit\/cached\-images\/172\-37\-38\-0\-0\-37\-38|schwalbe\.co\.uk\/_webedit\/cached\-images\/174\-37\-38\-0\-0\-37\-38|sourceforge\.net\/social\/|masaltos\.com\/js\/cookies\-|onlive\.co\.uk\/account\/cookie_notice|parliamentlive\.tv\/cookie\/|propcom\.co\.uk\/cookie\/|gluecksdetektiv\.de\/wp\-content\/plugins\/easy\-fancybox\-pro\/|vebidoo\.de\/images\/xtotop\.|boosterblog\.com\/ban\/|out\.be\/widgets\/|cure\-naturali\.it\/banner\/|dday\.it\/assets\/img\/cds_logo\-|hikoki\-powertools\.it\/image\/top\-|currenttime\.tv\/a\/signup\-sidebar\-widget\/|espreso\.rs\/widget|auto\-motor\-und\-sport\.de\/img\/google\.svg|werkenntwen\.de\/images\/buttons\/|nouvelobs\.com\/social\/|qatarradio\.qa\/images\/LB\/|shabiba\.com\/images\/snapchat\-|shabiba\.com\/images\/whatsapp\-|cts\.com\.tw\/images\/bot_|calciomercato\.it\/img\/notizie\/social\/|ilquotidianodellazio\.it\/img\/mi\-piace\-|draugiem\.lv\/business\/ext\/fans\/|draugiem\.lv\/business\/ext\/follow\/|draugiem\.lv\/lapas\/widgets\/|cookiesv2\.publiekeomroep\.nl\/light\/|creaweb\.it\/cookie\/|cure\-naturali\.it\/cookies|effekt\.it\/analytics\/|interia\.pl\/rodo\-iframe|remixshop\.com\/bg\/site\/ajaxCheckCookiePolicy|doubleclick\.net\/activity|doubleclick\.net\/imp%|doubleclick\.net\/json|doubleclick\.net\/pixel|google\-analytics\.com\/batch[^\w.%-]|google\-analytics\.com\/collect|google\-analytics\.com\/gtm\/js|google\-analytics\.com\/internal\/collect[^\w.%-]|google\-analytics\.com\/plugins\/|google\-analytics\.com\/r\/collect[^\w.%-]|googletagmanager\.com\/gtag\/|googletagmanager\.com\/gtm\/|quantserve\.com\/api\/|quantserve\.com\/pixel\/|netquattro\.com\/stats\/|208\.91\.157\.30\/viewtrack\/|216\.18\.176\.4\/logger\/|3qsdn\.com\/watchtime|5min\.com\/flashcookie\/StorageCookieSWF_|88\.208\.248\.58\/tracking\/|99widgets\.com\/counters\/|9fine\.ru\/js\/counter\.|activengage\.com\/overwatch\/|ad\.atdmt\.com\/c\/|ad\.atdmt\.com\/e\/|ad\.atdmt\.com\/i\/img\/|ad\.atdmt\.com\/m\/|ad\.atdmt\.com\/s\/|addnow\.com\/tracker\/|addthis\.com\/at\/|addthis\.com\/live\/|addthiscdn\.com\/live\/|addthisedge\.com\/live\/|adf\.ly\/ad\/conv|adsv7\.com\/t\/|affilired\.com\/analytic\/|affirm\.com\/api\/v2\/cookie_sent|affirm\.com\/api\/v2\/session\/touch_track|afrigator\.com\/track\/|akanoo\.com\/tracker\/|alexa\.com\/minisiteinfo\/|alexa\.com\/traffic\/|aliyun\.com\/actionlog\/|allanalpass\.com\/track\/|alooma\.com\/track\/|alooma\.io\/track\/|alphasitebuilder\.co\.za\/tracker\/|amatomu\.com\/link\/log\/|amazonaws\.com\/analytics\.|amazonaws\.com\/avsmetrics\/|amazonaws\.com\/cdn\.barilliance\.com\/|amazonaws\.com\/fstrk\.net\/|amazonaws\.com\/initialize\/|amazonaws\.com\/ki\.js\/|amazonaws\.com\/new\.cetrk\.com\/|amazonaws\.com\/searchdiscovery\-satellite\-production\/|amazonaws\.com\/statics\.reedge\.com\/|amazonaws\.com\/wgntrk\/|ancestrycdn\.com\/tao\/at\/|aolanswers\.com\/wtrack\/|apester\.com\/event[^\w.%-]|appinthestore\.com\/click\/|appspot\.com\/analytics\/|appspot\.com\/api\/track\/|appspot\.com\/stats|areyouahuman\.com\/kitten|asterpix\.com\/tagcloudview\/|azureedge\.net\/javascripts\/Tracking\.|azureedge\.net\/track|azurewebsites\.net\/TrackView\/|baidu\.com\/pixel|bhphotovideo\.com\/imp\/|bing\.com\/aclick\/|birdsend\.email\/pixel|bit\.ly\/stats|bitclouds\.ru\/trd|bizrate\.co\.uk\/js\/survey_|blogblog\.com\/tracker\/|brandaffinity\.net\/icetrack\/|brandcdn\.com\/pixel\/|bravenet\.com\/counter\/|break\.com\/apextracker\/|browserscope\.org\/user\/beacon\/|bucklemail\.com\/a\/|byteoversea\.com\/log\/|c\-date\.com\/pixel\/|canada\.com\/js\/analytics\/|carambo\.la\/analytics\/|carambo\.la\/logging\/|cdn3\.net\/pixe\/|checkout\.com\/logger\/|chicoryapp\.com\/widget_v2\/|citygridmedia\.com\/tracker\/|citysearch\.com\/tracker\/|cityzen\.io\/Pixel\/|clickchatsold\.com\/d0\/|clickfunnels\.com\/userevents\/|clipsyndicate\.com\/cs_api\/cliplog|cloudapp\.net\/l\/|cloudfront\.net\/analyticsengine\/|cloudfront\.net\/autotracker|cloudfront\.net\/bti\/|cloudfront\.net\/performable\/|cloudfront\.net\/sitegainer_|cloudfront\.net\/track|cloudfunctions\.net\/commonBonnierDataLayer|cloudfunctions\.net\/function\-record\-stream\-metric|cloudfunctions\.net\/ingest|clustrmaps\.com\/counter\/|cnetcontent\.com\/log|cnevids\.com\/metrics\/|cnpapers\.com\/scripts\/library\/|cnzz\.com\/stat\.|competitoor\.com\/analytics\/|conde\.io\/beacon|condenastdigital\.com\/content|connect\.facebook\.net\/signals\/|contentpass\.net\/stats|creativecdn\.com\/pix\/|creativecdn\.com\/tags|crm\-vwg\.com\/tracker\/|crowdfactory\.com\/tracker\/|cumulus\-cloud\.com\/trackers\/|customerlobby\.com\/ctrack\-|d31bfnnwekbny6\.cloudfront\.net\/customers\/|d3hb14vkzrxvla\.cloudfront\.net\/health\-check|data\.microsoft\.com\/OneCollector\/|daumcdn\.net\/tiara\/|daxab\.com\/logger\/|daylogs\.com\/counter\/|dditscdn\.com\/log\/|dealerfire\.com\/analytics\/|deb\.gs\/track\/|delivra\.com\/tracking\/|delvenetworks\.com\/player\/plugins\/analytics\/|desert\.ru\/tracking\/|desipearl\.com\/tracker\/|directnews\.co\.uk\/feedtrack\/|dmcdn\.net\/behavior\/|drift\.com\/track|dtym7iokkjlif\.cloudfront\.net\/dough\/|early\-birds\.fr\/tracker\/|egmontpublishing\.dk\/tracking\/|email\.mediafire\.com\/wf\/open|emarketeer\.com\/tracker\/|epromote\.co\.za\/track\/|eventful\.com\/apps\/generic\/|evgnet\.com\/beacon\/|eviesays\.com\/js\/analytics\/|evri\.com\/analytics\/|exitintel\.com\/log\/|facebook\.com\/audience_network\/|facebook\.com\/method\/links\.getStats|facebook\.com\/rtb_impression\/|facebook\.com\/rtb_video\/|facebook\.com\/tr|fairfax\.com\.au\/js\/track\/|feed\.informer\.com\/fdstats|feedify\.net\/thirdparty\/json\/track\/|filesonic\.com\/referral\/|fitanalytics\.com\/metrics\/|flex\.msn\.com\/mstag\/|followistic\.com\/widget\/stat\/|footballmedia\.com\/tracking\/|foxcontent\.com\/tracking\/|fp\-cdn\.azureedge\.net\/prod\/|freecurrencyrates\.com\/statgif\.|gamegecko\.com\/gametrack|getrockerbox\.com\/pixel|github\.com\/notifications\/beacon\/|google\.com\/analytics\/|googleusercontent\.com\/tracker\/|gotmojo\.com\/track\/|grabnetworks\.com\/beacons\/|gstatic\.com\/gen_204|gstatic\.com\/wcm\/impl\-|gubagoo\.com\/modules\/tracking\/|gubagoo\.io\/track\/|hasbro\.com\/includes\/js\/metrics\/|hello\.myfonts\.net\/count\/|hgcdn\.net\/|hocalwire\.com\/tracking\-|hubspot\.com\/analytics\/|hubspot\.com\/tracking\/|ibmcloud\.com\/collector\/|impdesk\.com\/smartpix\/|innogamescdn\.com\/media\/js\/metrics\-|inphonic\.com\/tracking\/|inq\.com\/tagserver\/logging\/|inq\.com\/tagserver\/tracking\/|insnw\.net\/assets\/dsc\/dsc\.fingerprint\-|instagram\.com\/logging\/|instagram\.com\/logging_client_events|installiq\.com\/Pixels\/|intensedebate\.com\/widgets\/blogstats\/|internetfuel\.com\/tracking\/|intuitwebsites\.com\/tracking\/|ipstatp\.com\/growth\/fe_sdk\/reportsdk\/|ipstatp\.com\/static_magic\/pgc\/tech\/collect\/|kbb\.com\/partner\/|klickly\.com\/track|kochava\.com\/track\/|kxcdn\.com\/actor\/|kxcdn\.com\/prj\/|l\-host\.net\/etn\/omnilog|legacy\.com\/globalscripts\/tracking\/|letv\.com\/cloud_pl\/|ligatus\.com\/script\/viewtracker\-|lingows\.appspot\.com\/page_data\/|link\.indiegogo\.com\/img\/|linkbucks\.com\/visitScript\/|linkedin\.com\/countserv\/count\/|list\-manage\.com\/track\/|live\-partner\.com\/tags|livefyre\.com\/libs\/tracker\/|livefyre\.com\/tracking\/|liverail\.com\/track\/|location3\.com\/analytics\/|ltassrv\.com\/track\/|luminate\.com\/track\/|magnify\.net\/decor\/track\/|mail\-app\.com\/pvtracker\/|mail\.ru\/grstat|mail\.ru\/k|mandrillapp\.com\/track\/|mangomolo\.com\/tracking\/|mapquestapi\.com\/logger\/|maptrackpro\.com\/track\/|mashery\.com\/analytics\/|mbsvr\.net\/js\/tracker\/|media\-imdb\.com\/twilight\/|mediabong\.com\/t\/|mediabong\.net\/t\/|merchenta\.com\/track\/|minutemediacdn\.com\/campaign\-manager\-client\/|mixpanel\.com\/track|mochiads\.com\/clk\/|msecnd\.net\/script\/raptor\-|msecnd\.net\/scripts\/a\/ai\.|msecnd\.net\/scripts\/b\/ai\.|msecnd\.net\/scripts\/jsll\-|mshcdn\.com\/assets\/metrics\-|mtvnservices\.com\/metrics\/|mxmfb\.com\/rsps\/img\/|mysociety\.org\/track\/|nastydollars\.com\/trk\/|needle\.com\/pageload|netalpaca\.com\/beacon|netdna\-ssl\.com\/tracker\/|netne\.net\/stats\/|newton\.pm\/events\/track_bulk|ngpvan\.com\/v1\/Track\/|nice264\.com\/data|nitropay\.com\/nads\/|nspmotion\.com\/tracking\/|onecount\.net\/onecount\/oc_track\/|onescreen\.net\/os\/static\/pixels\/|ooyala\.com\/3rdparty\/comscore_|ooyala\.com\/sas\/analytics|ooyala\.com\/verify|outbrain\.com\/nanoWidget\/externals\/cookie\/|pair\.com\/itero\/tracker_ftc\/|parsely\.com\/plogger\/|payments\.amazon\.com\/cs\/uedata|paypal\.com\/xoplatform\/logger\/api\/logger|pega\.com\/logserver|penton\.com\/analytics\/|performgroup\.com\/metrics\/|photobox\.com\/event|photobox\.com\/logs|piano\.io\/tracker\/|pixel\.indieclicktv\.com\/annonymous\/|planet49\.com\/log\/|player\.ooyala\.com\/errors\/report|playtomic\.com\/Tracker\/|plugins\.longtailvideo\.com\/googlytics|plugins\.longtailvideo\.com\/yourlytics|poweredbyeden\.com\/widget\/tracker\/|ppx\.com\/tracking\/|primedia\.co\.za\/analytics\/|propelplus\.com\/track\/|publicbroadcasting\.net\/analytics\/|pushly\.com\/pushly\-event\-tracker|px\-cdn\.net\/b\/s|qcloud\.com\/report\.go|qq\.com\/dataimport\/|qq\.com\/stats|quisma\.com\/tracking\/|quora\.com\/_\/ad\/|rapidspike\.com\/rum\/|raygun\.io\/events|rbl\.ms\/res\/users\/tracking\/|readcube\.com\/tracking\/|rebel\.ai\/track|recart\.com\/tracking\/|reelevant\.dev\/tracker|reevoo\.com\/track\/|reevoo\.com\/track_url\/|reflow\.tv\/pixels\/|relaymedia\.com\/ping|reverbnation\.com\/widgets\/trk\/|richrelevance\.com\/rrserver\/tracking|rokt\.com\/pixel\/|ru4\.com\/click|s24cloud\.net\/log[^\w.%-]|s24cloud\.net\/metrics\/|sail\-horizon\.com\/horizon\/|sail\-horizon\.com\/spm\/|sailthru\.com\/img\/|schibsted\.com\/autoTracker|scribol\.com\/traffix\/widget_tracker\/|share\-online\.biz\/affiliate\/|shareaholic\.com\/analytics_|shareholder\.com\/track\/|sharethis\.com\/increment_clicks|sharethis\.com\/pageviews|sinajs\.cn\/open\/analytics\/|sitebooster\.com\/sb\/wix\/p|sitefinity\.com\/collect\/|skysa\.com\/tracker\/|smartertravel\.com\/ext\/pixel\/|smg\.com\/Etrack\/|snapkit\.com\/v1\/sdk\/metrics\/|soccer\.ru\/counter\/|sohu\.com\/stat\/|southafricahome\.com\/statsmodulev2\/|spaceprogram\.com\/webstats\/|sparklit\.com\/counter\/|spot\.im\/api\/tracker\/|streamads\.com\/view|su\.pr\/hosted_js|sulia\.com\/papi\/sulia_partner\.js\/|survey\.io\/log|synergizeonline\.net\/trackpoint\/|tagcdn\.com\/pix\/|techweb\.com\/beacon\/|thefilter\.com\/events\/view|themesltd\.com\/hit\-counter\/|themesltd\.com\/online\-users\-counter\/|thespringbox\.com\/analytics\/|thismoment\.com\/tracking\/|thron\.com\/shared\/plugins\/tracking\/|tinyurl\.com\/pixel\.gif\/|toast\.com\/log|topix\.net\/t6track\/|torrentprotect\.com\/geoip|totallylayouts\.com\/hit\-counter\/|totallylayouts\.com\/online\-users\-counter\/|touchcommerce\.com\/tagserver\/logging\/|tourradar\.com\/def\/partner|tra\.scds\.pmdstatic\.net\/sourcepoint\/|traq\.li\/tracker\/|travel\-assets\.com\/datacapture\/|trendmd\.com\/events|trustpilot\.com\/stats\/|trustsquare\.net\/trafficmonitor\/|turnto\.com\/webEvent\/|twik\.io\/track|twimg\.com\/jot|twitter\.com\/scribe\/|ultimatebootcd\.com\/tracker\/|ultimedia\.com\/v\/|uptime\.com\/static\/rum\/)/i;
 var bad_da_hostpath_regex_flag = 499 > 0 ? true : false;  // test for non-zero number of rules
     
 // 154 rules as an efficient NFA RegExp:
@@ -4578,7 +4696,7 @@ var good_url_parts_RegExp = /^$/;
 var good_url_parts_flag = 0 > 0 ? true : false;  // test for non-zero number of rules
     
 // 499 rules as an efficient NFA RegExp:
-var bad_url_parts_RegExp = /(?:\-job\-widget\.|\/1pixel\.|\/alerte_tracking\.|\/altClickToSearch\.|\/bloglines\.gif|\/conversional\-popup\.|\/dealsaver\/widget\/|\/disable\-right\-click\-|\/disable\-right\-click\/|\/disablerightclick\.|\/dsv_video_bar\.|\/e\-digital\-survey\.|\/ExitIntentPopUp\.|\/getnetworkwidget\?|\/headsoc\.|\/icon\-blog\-|\/logo_eskup\.|\/mailchimp\-iframe\/|\/norightclick\.|\/pixel_transparent\.|\/pixel_trasp\.gif\?|\/plugins\/rightclick\/|\/plugins\/scroll\-triggered\-boxes\/|\/plugins\/wp\-emailfeedburnerpop\/|\/popup_do_|\/pubExchange\.min\.js|\/recommendations\-widget\/|\/script\/snow\.js|\/show\-join\-email\.jsonp\?|\/signup_widget\.js|\/signup_widget\.min\.js|\/surveyShower\.|\/toolbarxooit\/\?|\/transparent\-pixel\.|\/wp\-content\/plugins\/rating\-widget\/|\/wp\-content\/plugins\/tab\-slide\/|\/wp\-content\/plugins\/vto_plus\/|\/taboola\-iframe\/|\/taboola\/head\.|\/taboolaArticleHead\.|\/taboolaHead\.|\/outbrain\-load\-|\/outbrainAd\.|\-newsletter\-popup\.|\-newsletter\-subscription\-|\-newsletter\/popup\/|\-newsletterwidget\-|\-newsletterwidget\.|\-subscription\-popup\/|\-subscription\-widget\/|\/addthis_subscribe\.|\/assets\/newsletter\-|\/banner\-newsletter\.|\/banner\/newsletter\.|\/bannerino\-newsletter\.|\/BannerNewsletter\.|\/content\/newsletter\/|\/content\/newsletter_|\/emma\-content\-aggregates\-prd\.|\/esnewsletterad\.|\/images\/newslette\-|\/images\/Newsletter\.|\/images\/newsletter_|\/images\/subscribe\-|\/img\/newsletter\.|\/img\/newsletter\/|\/inscription\-newsletter\-|\/inscription_newsletter\?|\/investors\-newsletters\/|\/Javascripts\/Newsletter\.|\/layout\/newsletter\.|\/Masthead\-Newsletter\-|\/media\/newsletters\/|\/Newsletter\-Banner\-|\/newsletter\-banner\.|\/newsletter\-logo\-|\/newsletter\-subscription\-|\/newsletter\/pop\-|\/newsletter\/popin\/|\/newsletter\/popup\-|\/newsletter\/popup\/|\/newsletter\/subscription\/|\/newsletter_banner\.|\/newsletter_popup\/|\/newsletter_popup_|\/newsletter_widget\.|\/newsletterbanner3\.|\/newsletterpopup\.|\/newsletterpopup\/|\/NewsletterSubscription\.|\/newsletterwidget\/|\/plugins\/mega\-subscribe\-popup\/|\/plugins\/newsletter\-|\/plugins\/newsletter\/|\/plugins\/NKS\-subscription\/|\/plugins\/wp\-subscribe\-pro\/|\/pop\-in\-newsletter\/|\/popinNewsletter\.|\/popinNewsletter\/|\/popups\/subscribe\-|\/site\/newsletter\-|\/social\/newsletters_|\/static\/newsletter\.|\/subscribe\-popup\.|_banners\/newsletter_|_down_newsletter_|_img\/newsletter\.|_newletter_banner2\.|_popup\/newsletter\.|~popinNewsletter\.|\-blog\-rss\.|\-rss\-social\.|\-social\-rss\.|\/follow\-rss\.|\/follow\/rss\-|\/follow_rss\.|\/imagen_rss_|\/images\/rss\-|\/images\/rss\/|\/images\/rss_|\/img\/rss\.|\/img\/rss_|\/rss\-follow\.|\/rss\-google\.|\/rss\-head\.|\/rss\-logo\.|\/rss\-yahoo\.|\/rss\/feed_widget\/|\/rss\/syndication2\.|\/rss_follow\.|\/rss_logo\.|\/RSS_social\.|\/rss_widget\/|\/rssimg\.|\/social\-rss\-|\/social\-rss\.|\/social\/rss_|\/social_rss_|\/subscribe\-to\-blog_rss\.|_fullimage_RSS\.|_rss_logo_|_social_rss\.|\/scrolltoplugin\.|\/onesignal\-free\-|\/plugins\/wp\-notification\-bars\/|\/push_subscription\.|\/russmediapush\/|\/scripts\/onesignal\.|\/site\-notification\-desk\.|\/webPushIframe\.|\/jquery\.androidbanner\.js|\/jquery\.smartbanner\.js$|\/jquery\.smartbanner\.min\.js$|\-34x35\-twitter\.|\-35x35\-facebook\.|\-35x35\-twitter\.|\-box\-facebook_|\-box\-twitter_|\-btn\-facebook\.|\-btn\-social\-|\-btn\-twitter\.|\-btn\-youtube\-|\-btn\-youtube\.|\-buttons\-facebook\.|\-buttons\-twitter\.|\-facebook\-128\-|\-facebook\-128x128\.|\-facebook\-15x15\.|\-facebook\-64\-|\-facebook\-64\.|\-facebook\-btn\.|\-facebook\-icon\-|\-facebook\-icon\.|\-facebook\-icons\-|\-facebook\-like\-box\/|\-facebook\-likeButton\-|\-facebook\-share\.|\-facebook\-widget\.|\-facebook1\.|\-facebook2\.|\-fb\-logo\.|\-fb\-share\.|\-fbpopup\.|\-follow\-icon\-|\-follow\-icons\.|\-follow\-us\-icons\.|\-followicons\.|\-foot\-twitter\.|\-footer\-social\-|\-footer\-social\.|\-footer\-youtube\-|\-footer_social\.|\-google\-32\.|\-google\-icon\.|\-google\-plus\-|\-google\-plus\.|\-google\-plus_|\-googleplus\.|\-googleplus_|\-header\-social\-|\-ico\-google\.|\-ico\-twitter\.|\-icon\-facebook\.|\-icon\-google\-|\-icon\-social\-|\-icon\-twitter\.|\-icon\-youtube\.|\-icon_social\.|\-iconFacebook\.|\-icons\/facebook\.|\-icons\/google\.|\-icons\/twitter\.|\-iconTwitter\.|\-instagram\-logo\-|\-instagram_logo\.|\-left\-social\.|\-link\-social\.|\-Linkedin\-logo\-|\-moresocial\-|\-nav\-social\-|\-nav\-social\.|\-pic\/share\-|\-pinterest\-logo\.|\-plus_social\.|\-redes\-facebook\.|\-redes\-twitter\.|\-redes\-youtube\.|\-share\-16\.|\-share\-bar\/|\-share\-buttons2\.|\-share\-buttons3\/|\-share\-email\.|\-share\-email2\.|\-share\-facebook\.|\-share\-icon\.|\-share\-icons\-|\-share\-icons\.|\-share\-master\/|\-share\-save\/|\-share\-sprite\-|\-share\-sprite\.|\-share\-tools\-|\-share\-twiiter\.|\-share\-whatsapp\.|\-share2\-master\/|\-sharebar\-|\-sharebar\.|\-ShareButton2\.|\-ShareButton_|\-sharebuttons_|\-shareit\.|\-sharetools\-|\-shareWidget\.|\-sharing\-popin\.|\-slide\-social\-|\-social\-32\.|\-social\-bar\.|\-social\-bar\/|\-social\-btn\.|\-social\-buttons\-|\-social\-buttons\.|\-social\-email\-|\-social\-facebook\-|\-social\-facebook\.|\-social\-facebookhover\-|\-social\-flat\.|\-social\-flickr\.|\-social\-google\-|\-social\-icon\-|\-social\-icon\.|\-social\-icons\-|\-social\-icons\.|\-social\-icons\?|\-social\-instagram\-|\-social\-instagram\.|\-social\-linked\-|\-social\-linkedin\.|\-social\-panel\.|\-social\-panel\/|\-social\-pinterest\-|\-social\-popup\-|\-social\-profiles\-|\-social\-share\/|\-social\-share_|\-social\-sidebar\.|\-Social\-Sidebar\/|\-social\-slider\/|\-social\-sprite\-|\-social\-sprite\.|\-social\-sprites\.|\-social\-tumblr\-|\-social\-twitter\-|\-social\-twitter\.|\-social\-twitterhover\-|\-social\-widget1\.|\-social\-you\-tube\.|\-social\-youtube\-|\-social\/facebook\.|\-social\/istagram\.|\-social\/linkedin\.|\-social\/twitter\.|\-social\/youtube\.|\-socialbar\.|\-socialbuttons\.|\-socialbuttons\/|\-socialicons\.|\-socialmedia\-buttons\/|\-socialmedia\-sprite\.|\-socialmediashare\.|\-sprite\-social\-|\-sticky\-social\/|\-subscribe\-social\.|\-toolbar\-social\.|\-twitter\-128\-|\-twitter\-128x128\.|\-twitter\-15x15\.|\-twitter\-16x16\.|\-twitter\-64\-|\-twitter\-64\.|\-twitter\-btn\.|\-twitter\-icon\-|\-twitter\-icon\.|\-twitter\-rnd\.|\-twitter\-social\.|\-twitter\-white\-|\-twitter\.js|\-twitter1\.|\-twitter14\.|\-twitter2\.|\-twitterbirdsprite\.|\-webicon\-facebook\-|\-webicon\-twitter\-|\-webicon\-youtube\-|\-youtube\-128x128\.|\-youtube\-24x24\.|\-youtube\-32\.|\-youtube\-btn\.|\-YouTube\-Button1\.|\-youtube\-flat\-|\-youtube\-icon\-24\.|\-youtube\-icon\.|\-youtube\-s\.|\.bzshare\.|\.bztotalshare\.|\.dkshare\.|\.dktotalshare\.|\.easyshare\:|\.facebookLikePopUp\.|\.fbshare\.js|\.mobile\-share\.|\.pluckCount\.|\.share\.dossierheader\.|\.share\.lead\.|\.share\.utils\.|\.share\/share\.|\.shareaholic\-|\.sharebar\.js|\.sharecount\.|\.shareCounts\.|\.sharetool\.|\.sharing\.js|\.simpleshare\.|\.social\/share\/|\.sociallocker\.|\/01social\.|\/02social\.|\/03social\.|\/16x16\/facebook_|\/16x16\/google_plus\.|\/16x16\/twitter\.|\/32_facebook\.|\/32x32\-facebook\.|\/32x32\-twitter\.|\/32x32\-youtube\.|\/32x32\/facebook_|\/32x32\/twitter_|\/35x35\/facebook\.|\/35x35\/google\.|\/35x35\/twitter\.|\/45x45xfacebook\-ico\.|\/45x45xtwitter\-ico\.|\/a2a_share_|\/accesspress\-social\-|\/actionsnshare\/|\/add\-mymsn2\.|\/addthis\-stumble\.|\/addthis_horizontal\.|\/addthis_widget\.|\/addtoany\-|\/addtoany\.|\/addtogoogle\.|\/addtomyyahoo4\.|\/advinstagram\/|\/amp\-social\-|\/android\-share\.|\/aolshare\/|\/app\/social\.|\/appSocialShare\/|\/article\-shares\.|\/article\-social\/|\/ArticleSocialShare\.|\/ashare\.js|\/aspexi\-facebook\-|\/assets\/facebook\-|\/assets\/facebook_|\/assets\/fb\.|\/assets\/social\-|\/assets\/social\/|\/assets\/social_|\/assets\/tumblr_|\/assets\/twitter\-|\/assets\/twitter_|\/ayoshare\.js|\/badge_twitter\.|\/banner\-social\.|\/banner\/social\/|\/banniere_facebook_|\/bg\-share\.|\/bg\-social\.|\/big\-facebook\.|\/big\-twitter\.|\/bigphoto_share\.|\/body\/share\/|\/bookmarksite_google\.|\/bottom\-facebook\.|\/bottom\-twitter\.|\/bouton\-youtubue\.|\/bt_facebook_|\/bt_g_facebook_|\/bt_g_twitter_|\/bt_google_|\/bt_share_|\/bt_you_tube_|\/btn\-blog\-|\/btn\-facebook\-|\/btn\-facebook\.|\/btn\-follow\-|\/btn\-googleplus\-|\/btn\-share\-|\/btn\-share\.|\/btn\-social\-|\/btn\-twitter\-|\/btn\-twitter\.|\/btn\-youtube\-|\/btn\/follow\?|\/btn_facebook\.|\/btn_facebook_|\/btn_google_|\/btn_share_|\/btn_social\.|\/btn_social_|\/btnFacebook\.|\/btns_youtube_|\/btnShareSprite\.|\/btnsSocialMedia\.|\/btnTwitter\.|\/button\-facebook\-|\/button\-facebook\.|\/button\-twitter\-|\/button\-twitter\.|\/Button\-YouTube\.|\/button\/follow\-|\/button\/share\.|\/button1\-share\.|\/button_custom_twitter\.|\/button_facebook\.|\/button_share\.|\/button_social_|\/button_twitter_|\/Buttons\-Facebook\.|\/Buttons\-Twitter\.|\/buttons\/facebook\.|\/buttons\/google\.|\/buttons\/share\/|\/buttons\/share_|\/buttons\/social\-|\/buttons\/social_|\/buttons\/socials\.|\/buttons\/twitter\.|\/buttons\/youtube\.|\/bwSocialIcons\.|\/bz\-share\.|\/bz_share\/|\/chs\/share\/|\/cht\/share\/|\/circle_share\.|\/cnw\.share\.|\/color\-facebook\-|\/color\-twitter\-|\/commentshareicons\.|\/commons\/social\/|\/commonSprites\/social\/|\/components\/share\/|\/connect\-facebook\-|\/connect\-facebook\.|\/connect\-google\-|\/connect\-google\.|\/connect\-twitter\-|\/connect\-twitter\.)/i;
+var bad_url_parts_RegExp = /(?:\-job\-widget\.|\/1pixel\.|\/alerte_tracking\.|\/altClickToSearch\.|\/bloglines\.gif|\/conversional\-popup\.|\/dealsaver\/widget\/|\/disable\-right\-click\-|\/disable\-right\-click\/|\/disablerightclick\.|\/dsv_video_bar\.|\/e\-digital\-survey\.|\/ExitIntentPopUp\.|\/getnetworkwidget\?|\/headsoc\.|\/icon\-blog\-|\/logo_eskup\.|\/mailchimp\-iframe\/|\/norightclick\.|\/pixel_transparent\.|\/pixel_trasp\.gif\?|\/plugins\/rightclick\/|\/plugins\/scroll\-triggered\-boxes\/|\/plugins\/wp\-emailfeedburnerpop\/|\/popup_do_|\/pubExchange\.min\.js|\/recommendations\-widget\/|\/script\/snow\.js|\/show\-join\-email\.jsonp\?|\/signup_widget\.js|\/signup_widget\.min\.js|\/surveyShower\.|\/toolbarxooit\/\?|\/transparent\-pixel\.|\/wp\-content\/plugins\/rating\-widget\/|\/wp\-content\/plugins\/tab\-slide\/|\/wp\-content\/plugins\/vto_plus\/|\/taboola\-iframe\/|\/taboola\/head\.|\/taboolaArticleHead\.|\/taboolaHead\.|\/outbrain\-load\-|\/outbrainAd\.|\-newsletter\-popup\.|\-newsletter\-subscription\-|\-newsletter\/popup\/|\-newsletterwidget\-|\-newsletterwidget\.|\-subscription\-popup\/|\-subscription\-widget\/|\/addthis_subscribe\.|\/assets\/newsletter\-|\/banner\-newsletter\.|\/banner\/newsletter\.|\/bannerino\-newsletter\.|\/BannerNewsletter\.|\/content\/newsletter\/|\/content\/newsletter_|\/emma\-content\-aggregates\-prd\.|\/esnewsletterad\.|\/images\/newslette\-|\/images\/Newsletter\.|\/images\/newsletter_|\/images\/subscribe\-|\/img\/newsletter\.|\/img\/newsletter\/|\/inscription\-newsletter\-|\/inscription_newsletter\?|\/investors\-newsletters\/|\/Javascripts\/Newsletter\.|\/layout\/newsletter\.|\/Masthead\-Newsletter\-|\/media\/newsletters\/|\/Newsletter\-Banner\-|\/newsletter\-banner\.|\/newsletter\-logo\-|\/newsletter\-subscription\-|\/newsletter\/pop\-|\/newsletter\/popin\/|\/newsletter\/popup\-|\/newsletter\/popup\/|\/newsletter\/subscription\/|\/newsletter_banner\.|\/newsletter_popup\/|\/newsletter_popup_|\/newsletter_widget\.|\/newsletterbanner3\.|\/newsletterpopup\.|\/newsletterpopup\/|\/NewsletterSubscription\.|\/newsletterwidget\/|\/plugins\/mega\-subscribe\-popup\/|\/plugins\/newsletter\-|\/plugins\/newsletter\/|\/plugins\/NKS\-subscription\/|\/plugins\/wp\-subscribe\-pro\/|\/pop\-in\-newsletter\/|\/popinNewsletter\.|\/popinNewsletter\/|\/popups\/subscribe\-|\/site\/newsletter\-|\/social\/newsletters_|\/static\/newsletter\.|\/subscribe\-popup\.|_banners\/newsletter_|_down_newsletter_|_img\/newsletter\.|_newletter_banner2\.|_popup\/newsletter\.|~popinNewsletter\.|\-blog\-rss\.|\-logo\-rss\.|\-rss\-social\.|\-social\-rss\.|\/follow\-rss\.|\/follow\/rss\-|\/follow_rss\.|\/imagen_rss_|\/images\/rss\-|\/images\/rss\/|\/images\/rss_|\/img\/rss\.|\/img\/rss_|\/rss\-follow\.|\/rss\-google\.|\/rss\-head\.|\/rss\-logo\.|\/rss\-yahoo\.|\/rss\/feed_widget\/|\/rss\/syndication2\.|\/rss_follow\.|\/rss_logo\.|\/RSS_social\.|\/rss_widget\/|\/rssimg\.|\/social\-rss\-|\/social\-rss\.|\/social\/rss_|\/social_rss_|\/subscribe\-to\-blog_rss\.|_fullimage_RSS\.|_rss_logo_|_social_rss\.|\/scrolltoplugin\.|\/onesignal\-free\-|\/plugins\/wp\-notification\-bars\/|\/push_subscription\.|\/russmediapush\/|\/scripts\/onesignal\.|\/site\-notification\-desk\.|\/webPushIframe\.|\/jquery\.androidbanner\.js|\/jquery\.smartbanner\.js$|\/jquery\.smartbanner\.min\.js$|\-34x35\-twitter\.|\-35x35\-facebook\.|\-35x35\-twitter\.|\-box\-facebook_|\-box\-twitter_|\-btn\-facebook\.|\-btn\-social\-|\-btn\-twitter\.|\-btn\-youtube\-|\-btn\-youtube\.|\-buttons\-facebook\.|\-buttons\-twitter\.|\-facebook\-128\-|\-facebook\-128x128\.|\-facebook\-15x15\.|\-facebook\-64\-|\-facebook\-64\.|\-facebook\-btn\.|\-facebook\-icon\-|\-facebook\-icon\.|\-facebook\-icons\-|\-facebook\-like\-box\/|\-facebook\-likeButton\-|\-facebook\-share\.|\-facebook\-widget\.|\-facebook1\.|\-facebook2\.|\-fb\-logo\.|\-fb\-share\.|\-fbpopup\.|\-follow\-icon\-|\-follow\-icons\.|\-follow\-us\-icons\.|\-followicons\.|\-foot\-twitter\.|\-footer\-social\-|\-footer\-social\.|\-footer\-youtube\-|\-footer_social\.|\-google\-32\.|\-google\-icon\.|\-google\-plus\-|\-google\-plus\.|\-google\-plus_|\-googleplus\.|\-googleplus_|\-header\-social\-|\-ico\-google\.|\-ico\-twitter\.|\-icon\-facebook\.|\-icon\-google\-|\-icon\-social\-|\-icon\-twitter\.|\-icon\-youtube\.|\-icon_social\.|\-iconFacebook\.|\-icons\/facebook\.|\-icons\/google\.|\-icons\/twitter\.|\-iconTwitter\.|\-instagram\-logo\-|\-instagram_logo\.|\-left\-social\.|\-link\-social\.|\-Linkedin\-logo\-|\-moresocial\-|\-nav\-social\-|\-nav\-social\.|\-pic\/share\-|\-pinterest\-logo\.|\-plus_social\.|\-redes\-facebook\.|\-redes\-twitter\.|\-redes\-youtube\.|\-share\-16\.|\-share\-bar\/|\-share\-buttons2\.|\-share\-buttons3\/|\-share\-email\.|\-share\-email2\.|\-share\-facebook\.|\-share\-icon\.|\-share\-icons\-|\-share\-icons\.|\-share\-master\/|\-share\-save\/|\-share\-sprite\-|\-share\-sprite\.|\-share\-tools\-|\-share\-twiiter\.|\-share\-whatsapp\.|\-share2\-master\/|\-sharebar\-|\-sharebar\.|\-ShareButton2\.|\-ShareButton_|\-sharebuttons_|\-shareit\.|\-sharetools\-|\-shareWidget\.|\-sharing\-popin\.|\-slide\-social\-|\-social\-32\.|\-social\-bar\.|\-social\-bar\/|\-social\-btn\.|\-social\-buttons\-|\-social\-buttons\.|\-social\-email\-|\-social\-facebook\-|\-social\-facebook\.|\-social\-facebookhover\-|\-social\-flat\.|\-social\-flickr\.|\-social\-google\-|\-social\-icon\-|\-social\-icon\.|\-social\-icons\-|\-social\-icons\.|\-social\-icons\?|\-social\-instagram\-|\-social\-instagram\.|\-social\-linked\-|\-social\-linkedin\.|\-social\-panel\.|\-social\-panel\/|\-social\-pinterest\-|\-social\-popup\-|\-social\-profiles\-|\-social\-share\/|\-social\-share_|\-social\-sidebar\.|\-Social\-Sidebar\/|\-social\-slider\/|\-social\-sprite\-|\-social\-sprite\.|\-social\-sprites\.|\-social\-tumblr\-|\-social\-twitter\-|\-social\-twitter\.|\-social\-twitterhover\-|\-social\-widget1\.|\-social\-you\-tube\.|\-social\-youtube\-|\-social\/facebook\.|\-social\/istagram\.|\-social\/linkedin\.|\-social\/twitter\.|\-social\/youtube\.|\-socialbar\.|\-socialbuttons\.|\-socialbuttons\/|\-socialicons\.|\-socialmedia\-buttons\/|\-socialmedia\-sprite\.|\-socialmediashare\.|\-sprite\-social\-|\-sticky\-social\/|\-subscribe\-social\.|\-toolbar\-social\.|\-twitter\-128\-|\-twitter\-128x128\.|\-twitter\-15x15\.|\-twitter\-16x16\.|\-twitter\-64\-|\-twitter\-64\.|\-twitter\-btn\.|\-twitter\-icon\-|\-twitter\-icon\.|\-twitter\-rnd\.|\-twitter\-social\.|\-twitter\-white\-|\-twitter\.js|\-twitter1\.|\-twitter14\.|\-twitter2\.|\-twitterbirdsprite\.|\-webicon\-facebook\-|\-webicon\-twitter\-|\-webicon\-youtube\-|\-youtube\-128x128\.|\-youtube\-24x24\.|\-youtube\-32\.|\-youtube\-btn\.|\-YouTube\-Button1\.|\-youtube\-flat\-|\-youtube\-icon\-24\.|\-youtube\-icon\.|\-youtube\-s\.|\.bzshare\.|\.bztotalshare\.|\.dkshare\.|\.dktotalshare\.|\.easyshare\:|\.facebookLikePopUp\.|\.fbshare\.js|\.mobile\-share\.|\.pluckCount\.|\.share\.dossierheader\.|\.share\.lead\.|\.share\.utils\.|\.share\/share\.|\.shareaholic\-|\.sharebar\.js|\.sharecount\.|\.shareCounts\.|\.sharetool\.|\.sharing\.js|\.simpleshare\.|\.social\/share\/|\.sociallocker\.|\/01social\.|\/02social\.|\/03social\.|\/16x16\/facebook_|\/16x16\/google_plus\.|\/16x16\/twitter\.|\/32_facebook\.|\/32x32\-facebook\.|\/32x32\-twitter\.|\/32x32\-youtube\.|\/32x32\/facebook_|\/32x32\/twitter_|\/35x35\/facebook\.|\/35x35\/google\.|\/35x35\/twitter\.|\/45x45xfacebook\-ico\.|\/45x45xtwitter\-ico\.|\/a2a_share_|\/accesspress\-social\-|\/actionsnshare\/|\/add\-mymsn2\.|\/addthis\-stumble\.|\/addthis_horizontal\.|\/addthis_widget\.|\/addtoany\-|\/addtoany\.|\/addtogoogle\.|\/addtomyyahoo4\.|\/advinstagram\/|\/amp\-social\-|\/android\-share\.|\/aolshare\/|\/app\/social\.|\/appSocialShare\/|\/article\-shares\.|\/article\-social\/|\/ArticleSocialShare\.|\/ashare\.js|\/aspexi\-facebook\-|\/assets\/facebook\-|\/assets\/facebook_|\/assets\/fb\.|\/assets\/social\-|\/assets\/social\/|\/assets\/social_|\/assets\/tumblr_|\/assets\/twitter\-|\/assets\/twitter_|\/ayoshare\.js|\/badge_twitter\.|\/banner\-social\.|\/banner\/social\/|\/banniere_facebook_|\/bg\-share\.|\/bg\-social\.|\/big\-facebook\.|\/big\-twitter\.|\/bigphoto_share\.|\/body\/share\/|\/bookmarksite_google\.|\/bottom\-facebook\.|\/bottom\-twitter\.|\/bouton\-youtubue\.|\/bt_facebook_|\/bt_g_facebook_|\/bt_g_twitter_|\/bt_google_|\/bt_share_|\/bt_you_tube_|\/btn\-blog\-|\/btn\-facebook\-|\/btn\-facebook\.|\/btn\-follow\-|\/btn\-googleplus\-|\/btn\-share\-|\/btn\-share\.|\/btn\-social\-|\/btn\-twitter\-|\/btn\-twitter\.|\/btn\-youtube\-|\/btn\/follow\?|\/btn_facebook\.|\/btn_facebook_|\/btn_google_|\/btn_share_|\/btn_social\.|\/btn_social_|\/btnFacebook\.|\/btns_youtube_|\/btnShareSprite\.|\/btnsSocialMedia\.|\/btnTwitter\.|\/button\-facebook\-|\/button\-facebook\.|\/button\-twitter\-|\/button\-twitter\.|\/Button\-YouTube\.|\/button\/follow\-|\/button\/share\.|\/button1\-share\.|\/button_custom_twitter\.|\/button_facebook\.|\/button_share\.|\/button_social_|\/button_twitter_|\/Buttons\-Facebook\.|\/Buttons\-Twitter\.|\/buttons\/facebook\.|\/buttons\/google\.|\/buttons\/share\/|\/buttons\/share_|\/buttons\/social\-|\/buttons\/social_|\/buttons\/socials\.|\/buttons\/twitter\.|\/buttons\/youtube\.|\/bwSocialIcons\.|\/bz\-share\.|\/bz_share\/|\/chs\/share\/|\/cht\/share\/|\/circle_share\.|\/cnw\.share\.|\/color\-facebook\-|\/color\-twitter\-|\/commentshareicons\.|\/commons\/social\/|\/commonSprites\/social\/|\/components\/share\/|\/connect\-facebook\-|\/connect\-facebook\.|\/connect\-google\-|\/connect\-google\.|\/connect\-twitter\-)/i;
 var bad_url_parts_flag = 499 > 0 ? true : false;  // test for non-zero number of rules
     
 // 0 rules as an efficient NFA RegExp:
@@ -4592,7 +4710,7 @@ var bad_url_regex_flag = 0 > 0 ? true : false;  // test for non-zero number of r
 // Add any good networks here. Format is network folowed by a comma and
 // optional white space, and then the netmask.
 // LAN, loopback, Apple (direct and Akamai e.g. e4805.a.akamaiedge.net), Microsoft (updates and services)
-// Apple Enterprise Network; https://support..com/en-us/HT210060
+// Apple Enterprise Network; https://support.apple.com/en-us/HT210060
 var GoodNetworks_Array = [ "10.0.0.0,     255.0.0.0",
 "172.16.0.0,        255.240.0.0",
 "17.248.128.0,      255.255.192.0",
@@ -4892,7 +5010,7 @@ else if (
    */
    /*
        Fix iOS 13 PAC file issue with Mail.app
-       See: https://forums.developer..com/thread/121928
+       See: https://forums.developer.apple.com/thread/121928
    */
    // Apple
    (host == "imap.mail.me.com") || (host == "smtp.mail.me.com") ||
@@ -4910,50 +5028,52 @@ else if (
    // Comcast
    (host == "imap.comcast.net") || (host == "smtp.comcast.net") ||
    dnsDomainIs(host, "imap.comcast.net") || dnsDomainIs(host, "smtp.comcast.net") ||
-   // Apple Enterprise Network Domains; https://support..com/en-us/HT210060
-   (host == "albert..com") || dnsDomainIs(host, "albert..com") ||
-   (host == "captive..com") || dnsDomainIs(host, "captive..com") ||
-   (host == "gs..com") || dnsDomainIs(host, "gs..com") ||
-   (host == "humb..com") || dnsDomainIs(host, "humb..com") ||
-   (host == "static.ips..com") || dnsDomainIs(host, "static.ips..com") ||
-   (host == "tbsc..com") || dnsDomainIs(host, "tbsc..com") ||
-   (host == "time-ios..com") || dnsDomainIs(host, "time-ios..com") ||
-   (host == "time..com") || dnsDomainIs(host, "time..com") ||
-   (host == "time-macos..com") || dnsDomainIs(host, "time-macos..com") ||
-   dnsDomainIs(host, ".push..com") ||
-   (host == "gdmf..com") || dnsDomainIs(host, "gdmf..com") ||
-   (host == "deviceenrollment..com") || dnsDomainIs(host, "deviceenrollment..com") ||
-   (host == "deviceservices-external..com") || dnsDomainIs(host, "deviceservices-external..com") ||
-   (host == "identity..com") || dnsDomainIs(host, "identity..com") ||
-   (host == "iprofiles..com") || dnsDomainIs(host, "iprofiles..com") ||
-   (host == "mdmenrollment..com") || dnsDomainIs(host, "mdmenrollment..com") ||
+   // Apple Enterprise Network Domains; https://support.apple.com/en-us/HT210060
+   (host == "albert.apple.com") || dnsDomainIs(host, "albert.apple.com") ||
+   (host == "captive.apple.com") || dnsDomainIs(host, "captive.apple.com") ||
+   (host == "gs.apple.com") || dnsDomainIs(host, "gs.apple.com") ||
+   (host == "humb.apple.com") || dnsDomainIs(host, "humb.apple.com") ||
+   (host == "static.ips.apple.com") || dnsDomainIs(host, "static.ips.apple.com") ||
+   (host == "tbsc.apple.com") || dnsDomainIs(host, "tbsc.apple.com") ||
+   (host == "time-ios.apple.com") || dnsDomainIs(host, "time-ios.apple.com") ||
+   (host == "time.apple.com") || dnsDomainIs(host, "time.apple.com") ||
+   (host == "time-macos.apple.com") || dnsDomainIs(host, "time-macos.apple.com") ||
+   dnsDomainIs(host, ".push.apple.com") ||
+   (host == "gdmf.apple.com") || dnsDomainIs(host, "gdmf.apple.com") ||
+   (host == "deviceenrollment.apple.com") || dnsDomainIs(host, "deviceenrollment.apple.com") ||
+   (host == "deviceservices-external.apple.com") || dnsDomainIs(host, "deviceservices-external.apple.com") ||
+   (host == "identity.apple.com") || dnsDomainIs(host, "identity.apple.com") ||
+   (host == "iprofiles.apple.com") || dnsDomainIs(host, "iprofiles.apple.com") ||
+   (host == "mdmenrollment.apple.com") || dnsDomainIs(host, "mdmenrollment.apple.com") ||
    (host == "setup.icloud.com") || dnsDomainIs(host, "setup.icloud.com") ||
-   (host == "appldnld..com") || dnsDomainIs(host, "appldnld..com") ||
-   (host == "gg..com") || dnsDomainIs(host, "gg..com") ||
-   (host == "gnf-mdn..com") || dnsDomainIs(host, "gnf-mdn..com") ||
-   (host == "gnf-mr..com") || dnsDomainIs(host, "gnf-mr..com") ||
-   (host == "gs..com") || dnsDomainIs(host, "gs..com") ||
-   (host == "ig..com") || dnsDomainIs(host, "ig..com") ||
-   (host == "mesu..com") || dnsDomainIs(host, "mesu..com") ||
-   (host == "oscdn..com") || dnsDomainIs(host, "oscdn..com") ||
-   (host == "osrecovery..com") || dnsDomainIs(host, "osrecovery..com") ||
-   (host == "skl..com") || dnsDomainIs(host, "skl..com") ||
-   (host == "swcdn..com") || dnsDomainIs(host, "swcdn..com") ||
-   (host == "swdist..com") || dnsDomainIs(host, "swdist..com") ||
-   (host == "swdownload..com") || dnsDomainIs(host, "swdownload..com") ||
-   (host == "swpost..com") || dnsDomainIs(host, "swpost..com") ||
-   (host == "swscan..com") || dnsDomainIs(host, "swscan..com") ||
-   (host == "updates-http.cdn-.com") || dnsDomainIs(host, "updates-http.cdn-.com") ||
-   (host == "updates.cdn-.com") || dnsDomainIs(host, "updates.cdn-.com") ||
-   (host == "xp..com") || dnsDomainIs(host, "xp..com") ||
+   (host == "appldnld.apple.com") || dnsDomainIs(host, "appldnld.apple.com") ||
+   (host == "gg.apple.com") || dnsDomainIs(host, "gg.apple.com") ||
+   (host == "gnf-mdn.apple.com") || dnsDomainIs(host, "gnf-mdn.apple.com") ||
+   (host == "gnf-mr.apple.com") || dnsDomainIs(host, "gnf-mr.apple.com") ||
+   (host == "gs.apple.com") || dnsDomainIs(host, "gs.apple.com") ||
+   (host == "ig.apple.com") || dnsDomainIs(host, "ig.apple.com") ||
+   (host == "mesu.apple.com") || dnsDomainIs(host, "mesu.apple.com") ||
+   (host == "oscdn.apple.com") || dnsDomainIs(host, "oscdn.apple.com") ||
+   (host == "osrecovery.apple.com") || dnsDomainIs(host, "osrecovery.apple.com") ||
+   (host == "skl.apple.com") || dnsDomainIs(host, "skl.apple.com") ||
+   (host == "swcdn.apple.com") || dnsDomainIs(host, "swcdn.apple.com") ||
+   (host == "swdist.apple.com") || dnsDomainIs(host, "swdist.apple.com") ||
+   (host == "swdownload.apple.com") || dnsDomainIs(host, "swdownload.apple.com") ||
+   (host == "swpost.apple.com") || dnsDomainIs(host, "swpost.apple.com") ||
+   (host == "swscan.apple.com") || dnsDomainIs(host, "swscan.apple.com") ||
+   (host == "updates-http.cdn-apple.com") || dnsDomainIs(host, "updates-http.cdn-apple.com") ||
+   (host == "updates.cdn-apple.com") || dnsDomainIs(host, "updates.cdn-apple.com") ||
+   (host == "xp.apple.com") || dnsDomainIs(host, "xp.apple.com") ||
+   dnsDomainIs(host, ".itunes.apple.com") ||
+   dnsDomainIs(host, ".apps.apple.com") ||
    dnsDomainIs(host, ".mzstatic.com") ||
-   (host == "ppq..com") || dnsDomainIs(host, "ppq..com") ||
-   (host == "lcdn-registration..com") || dnsDomainIs(host, "lcdn-registration..com") ||
-   (host == "crl..com") || dnsDomainIs(host, "crl..com") ||
+   (host == "ppq.apple.com") || dnsDomainIs(host, "ppq.apple.com") ||
+   (host == "lcdn-registration.apple.com") || dnsDomainIs(host, "lcdn-registration.apple.com") ||
+   (host == "crl.apple.com") || dnsDomainIs(host, "crl.apple.com") ||
    (host == "crl.entrust.net") || dnsDomainIs(host, "crl.entrust.net") ||
    (host == "crl3.digicert.com") || dnsDomainIs(host, "crl3.digicert.com") ||
    (host == "crl4.digicert.com") || dnsDomainIs(host, "crl4.digicert.com") ||
-   (host == "ocsp..com") || dnsDomainIs(host, "ocsp..com") ||
+   (host == "ocsp.apple.com") || dnsDomainIs(host, "ocsp.apple.com") ||
    (host == "ocsp.digicert.com") || dnsDomainIs(host, "ocsp.digicert.com") ||
    (host == "ocsp.entrust.net") || dnsDomainIs(host, "ocsp.entrust.net") ||
    (host == "ocsp.verisign.net") || dnsDomainIs(host, "ocsp.verisign.net") ||
